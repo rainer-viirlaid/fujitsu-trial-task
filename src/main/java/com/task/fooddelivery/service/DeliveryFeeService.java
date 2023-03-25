@@ -2,8 +2,6 @@ package com.task.fooddelivery.service;
 
 import com.task.fooddelivery.dto.DeliveryFeeDto;
 import com.task.fooddelivery.dto.DeliveryFeeRequestDto;
-import com.task.fooddelivery.entity.DeliveryMethod;
-import com.task.fooddelivery.repository.DeliveryMethodRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,12 +9,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class DeliveryFeeService {
 
-    private final DeliveryMethodRepository deliveryMethodRepository;
+    private final RegionalBaseFeeService baseFeeService;
 
     public DeliveryFeeDto calculateDeliveryFee(DeliveryFeeRequestDto deliveryFeeRequestDto) {
-        DeliveryMethod method = new DeliveryMethod();
-        method.setMethodName("test");
-        deliveryMethodRepository.save(method);
-        return null;
+        // TODO: weather fee
+        DeliveryFeeDto feeDto = new DeliveryFeeDto();
+        feeDto.fee = baseFeeService.getRegionalBaseFee(deliveryFeeRequestDto.city, deliveryFeeRequestDto.method);
+        return feeDto;
     }
 }

@@ -14,6 +14,15 @@ public class DeliveryFeeController {
 
     private final DeliveryFeeService deliveryFeeService;
 
+    /**
+     * Calculate the delivery fee according to the city, delivery method and weather.
+     * <p>
+     * By default, current weather data is used. If a timestamp is provided in the DTO, then weather data from that point in time
+     * will be used.
+     *
+     * @param deliveryFeeRequestDto DTO that contains request parameters
+     * @return total delivery fee
+     */
     @GetMapping("/fee")
     public DeliveryFeeDto getDeliveryFee(@RequestBody DeliveryFeeRequestDto deliveryFeeRequestDto) {
         return deliveryFeeService.calculateDeliveryFee(deliveryFeeRequestDto);

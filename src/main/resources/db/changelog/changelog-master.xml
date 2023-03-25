@@ -44,29 +44,29 @@
             <column name="id" type="serial">
                 <constraints primaryKey="true" primaryKeyName="pk_rbf" />
             </column>
-            <column name="delivery_method" type="integer" >
+            <column name="delivery_method_id" type="integer" >
                 <constraints nullable="false" foreignKeyName="fk_rbf_delivery_method" referencedTableName="delivery_method" referencedColumnNames="id" />
             </column>
-            <column name="city" type="integer" >
+            <column name="city_id" type="integer" >
                 <constraints nullable="false" foreignKeyName="fk_rbf_city" referencedTableName="city" referencedColumnNames="id" />
             </column>
             <column name="fee" type="numeric(10,2)" >
                 <constraints nullable="false" />
             </column>
         </createTable>
-        <addUniqueConstraint constraintName="ak_rbf_city_method" tableName="regional_base_fee" columnNames="delivery_method, city" />
+        <addUniqueConstraint constraintName="ak_rbf_city_method" tableName="regional_base_fee" columnNames="delivery_method_id, city_id" />
         <sql>
-            INSERT INTO regional_base_fee (delivery_method, city, fee) VALUES (1, 1, 4);
-            INSERT INTO regional_base_fee (delivery_method, city, fee) VALUES (2, 1, 3.5);
-            INSERT INTO regional_base_fee (delivery_method, city, fee) VALUES (3, 1, 3);
+            INSERT INTO regional_base_fee (delivery_method_id, city_id, fee) VALUES (1, 1, 4);
+            INSERT INTO regional_base_fee (delivery_method_id, city_id, fee) VALUES (2, 1, 3.5);
+            INSERT INTO regional_base_fee (delivery_method_id, city_id, fee) VALUES (3, 1, 3);
 
-            INSERT INTO regional_base_fee (delivery_method, city, fee) VALUES (1, 2, 3.5);
-            INSERT INTO regional_base_fee (delivery_method, city, fee) VALUES (2, 2, 3);
-            INSERT INTO regional_base_fee (delivery_method, city, fee) VALUES (3, 2, 2.5);
+            INSERT INTO regional_base_fee (delivery_method_id, city_id, fee) VALUES (1, 2, 3.5);
+            INSERT INTO regional_base_fee (delivery_method_id, city_id, fee) VALUES (2, 2, 3);
+            INSERT INTO regional_base_fee (delivery_method_id, city_id, fee) VALUES (3, 2, 2.5);
 
-            INSERT INTO regional_base_fee (delivery_method, city, fee) VALUES (1, 3, 3);
-            INSERT INTO regional_base_fee (delivery_method, city, fee) VALUES (2, 3, 2.5);
-            INSERT INTO regional_base_fee (delivery_method, city, fee) VALUES (3, 3, 2);
+            INSERT INTO regional_base_fee (delivery_method_id, city_id, fee) VALUES (1, 3, 3);
+            INSERT INTO regional_base_fee (delivery_method_id, city_id, fee) VALUES (2, 3, 2.5);
+            INSERT INTO regional_base_fee (delivery_method_id, city_id, fee) VALUES (3, 3, 2);
         </sql>
     </changeSet>
 </databaseChangeLog>
