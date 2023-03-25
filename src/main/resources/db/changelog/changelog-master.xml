@@ -8,37 +8,59 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
         http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+
     <changeSet id="19.03.2023 rainer viirlaid 1" author="rainer viirlaid">
         <createTable tableName="delivery_method">
             <column name="id" type="serial">
                 <constraints primaryKey="true" primaryKeyName="pk_delivery_method" />
             </column>
             <column name="method_name" type="varchar(50)" >
-                <constraints unique="true" uniqueConstraintName="ak_delivery_method_name" />
+                <constraints nullable="false" unique="true" uniqueConstraintName="ak_delivery_method_name" />
             </column>
         </createTable>
     </changeSet>
+
     <changeSet id="25.03.2023 rainer viirlaid 2" author="rainer viirlaid">
+        <createTable tableName="weather_station">
+            <column name="id" type="serial">
+                <constraints primaryKey="true" primaryKeyName="pk_weather_station" />
+            </column>
+            <column name="station_name" type="varchar(255)" >
+                <constraints nullable="false" unique="true" uniqueConstraintName="ak_weather_station_name" />
+            </column>
+        </createTable>
+        <createTable tableName="weather_report">
+            <column name="id" type="serial">
+                <constraints primaryKey="true" primaryKeyName="pk_weather_report" />
+            </column>
+            <column name="weather_station_id" type="integer" >
+                <constraints foreignKeyName="fk_weather_report_station" referencedTableName="weather_station" referencedColumnNames="id" />
+            </column>
+            <column name="station_name" defaultValue="unknown" type="varchar(255)" />
+            <column name="wmo_code" defaultValue="unknown" type="varchar(255)" />
+            <column name="air_temperature" defaultValue="0" type="double" />
+            <column name="wind_speed" defaultValue="0" type="double" />
+            <column name="phenomenon" defaultValue="none" type="varchar(50)" />
+            <column name="timestamp" type="timestamp" >
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="25.03.2023 rainer viirlaid 3" author="rainer viirlaid">
         <createTable tableName="city">
             <column name="id" type="serial">
                 <constraints primaryKey="true" primaryKeyName="pk_city" />
             </column>
             <column name="city_name" type="varchar(255)" >
-                <constraints unique="true" uniqueConstraintName="ak_city_name" />
+                <constraints nullable="false" unique="true" uniqueConstraintName="ak_city_name" />
+            </column>
+            <column name="weather_station_id" type="integer">
+                <constraints nullable="false" foreignKeyName="fk_city_weather_station" referencedTableName="weather_station" referencedColumnNames="id" />
             </column>
         </createTable>
     </changeSet>
-    <changeSet id="25.03.2023 rainer viirlaid 3" author="rainer viirlaid">
-        <sql>
-            INSERT INTO delivery_method (method_name) VALUES ('car');
-            INSERT INTO delivery_method (method_name) VALUES ('scooter');
-            INSERT INTO delivery_method (method_name) VALUES ('bike');
 
-            INSERT INTO city (city_name) VALUES ('Tallinn');
-            INSERT INTO city (city_name) VALUES ('Tartu');
-            INSERT INTO city (city_name) VALUES ('Pärnu');
-        </sql>
-    </changeSet>
     <changeSet id="25.03.2023 rainer viirlaid 4" author="rainer viirlaid">
         <createTable tableName="regional_base_fee">
             <column name="id" type="serial">
@@ -55,7 +77,86 @@
             </column>
         </createTable>
         <addUniqueConstraint constraintName="ak_rbf_city_method" tableName="regional_base_fee" columnNames="delivery_method_id, city_id" />
+    </changeSet>
+
+    <changeSet id="25.03.2023 rainer viirlaid 5" author="rainer viirlaid">
+        <createTable tableName="air_temperature_fee">
+            <column name="id" type="serial">
+                <constraints primaryKey="true" primaryKeyName="pk_air_temperature_fee" />
+            </column>
+            <column name="min_temp" type="double" />
+            <column name="min_strict" type="boolean" defaultValue="false" >
+                <constraints nullable="false" />
+            </column>
+            <column name="max_temp" type="double" />
+            <column name="max_strict" type="boolean" defaultValue="false" >
+                <constraints nullable="false" />
+            </column>
+            <column name="delivery_forbidden" type="boolean" defaultValue="false" >
+                <constraints nullable="false" />
+            </column>
+            <column name="delivery_method_id" type="integer" >
+                <constraints nullable="false" foreignKeyName="fk_air_temp_fee_delivery_method" referencedTableName="delivery_method" referencedColumnNames="id" />
+            </column>
+            <column name="fee" type="numeric(10,2)" >
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+        <createTable tableName="wind_speed_fee">
+            <column name="id" type="serial">
+                <constraints primaryKey="true" primaryKeyName="pk_wind_speed_fee" />
+            </column>
+            <column name="min_speed" type="double" />
+            <column name="min_strict" type="boolean" defaultValue="false" >
+                <constraints nullable="false" />
+            </column>
+            <column name="max_speed" type="double" />
+            <column name="max_strict" type="boolean" defaultValue="false" >
+                <constraints nullable="false" />
+            </column>
+            <column name="delivery_forbidden" type="boolean" defaultValue="false" >
+                <constraints nullable="false" />
+            </column>
+            <column name="delivery_method_id" type="integer" >
+                <constraints nullable="false" foreignKeyName="fk_wind_speed_fee_delivery_method" referencedTableName="delivery_method" referencedColumnNames="id" />
+            </column>
+            <column name="fee" type="numeric(10,2)" >
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+        <createTable tableName="phenomenon_fee">
+            <column name="id" type="serial" >
+                <constraints primaryKey="true" primaryKeyName="pk_phenomenon_fee" />
+            </column>
+            <column name="phenomenon_name" type="varchar(100)" >
+                <constraints nullable="false" />
+            </column>
+            <column name="delivery_forbidden" type="boolean" defaultValue="false" >
+                <constraints nullable="false" />
+            </column>
+            <column name="delivery_method_id" type="integer" >
+                <constraints nullable="false" foreignKeyName="fk_phenomenon_fee_delivery_method" referencedTableName="delivery_method" referencedColumnNames="id" />
+            </column>
+            <column name="fee" type="numeric(10,2)" >
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="25.03.2023 rainer viirlaid 6" author="rainer viirlaid">
         <sql>
+            INSERT INTO delivery_method (method_name) VALUES ('car');
+            INSERT INTO delivery_method (method_name) VALUES ('scooter');
+            INSERT INTO delivery_method (method_name) VALUES ('bike');
+
+            INSERT INTO weather_station (station_name) VALUES ('Tallinn-Harku');
+            INSERT INTO weather_station (station_name) VALUES ('Tartu-Tõravere');
+            INSERT INTO weather_station (station_name) VALUES ('Pärnu');
+
+            INSERT INTO city (city_name, weather_station_id) VALUES ('Tallinn', 1);
+            INSERT INTO city (city_name, weather_station_id) VALUES ('Tartu', 2);
+            INSERT INTO city (city_name, weather_station_id) VALUES ('Pärnu', 3);
+
             INSERT INTO regional_base_fee (delivery_method_id, city_id, fee) VALUES (1, 1, 4);
             INSERT INTO regional_base_fee (delivery_method_id, city_id, fee) VALUES (2, 1, 3.5);
             INSERT INTO regional_base_fee (delivery_method_id, city_id, fee) VALUES (3, 1, 3);
@@ -67,6 +168,30 @@
             INSERT INTO regional_base_fee (delivery_method_id, city_id, fee) VALUES (1, 3, 3);
             INSERT INTO regional_base_fee (delivery_method_id, city_id, fee) VALUES (2, 3, 2.5);
             INSERT INTO regional_base_fee (delivery_method_id, city_id, fee) VALUES (3, 3, 2);
+
+            INSERT INTO air_temperature_fee (max_temp, max_strict, delivery_method_id, fee) VALUES (-10, true, 2, 1);
+            INSERT INTO air_temperature_fee (max_temp, max_strict, delivery_method_id, fee) VALUES (-10, true, 3, 1);
+            INSERT INTO air_temperature_fee (min_temp, max_temp, delivery_method_id, fee) VALUES (-10, 0, 2, 0.5);
+            INSERT INTO air_temperature_fee (min_temp, max_temp, delivery_method_id, fee) VALUES (-10, 0, 3, 0.5);
+
+            INSERT INTO wind_speed_fee (min_speed, max_speed, delivery_method_id, fee) VALUES (10, 20, 3, 0.5);
+            INSERT INTO wind_speed_fee (min_speed, min_strict, delivery_forbidden, delivery_method_id, fee) VALUES (20, true, true, 3, 0);
+
+            INSERT INTO phenomenon_fee (phenomenon_name, delivery_method_id, fee) VALUES ('snow', 2, 1);
+            INSERT INTO phenomenon_fee (phenomenon_name, delivery_method_id, fee) VALUES ('sleet', 2, 1);
+            INSERT INTO phenomenon_fee (phenomenon_name, delivery_method_id, fee) VALUES ('snow', 3, 1);
+            INSERT INTO phenomenon_fee (phenomenon_name, delivery_method_id, fee) VALUES ('sleet', 3, 1);
+
+            INSERT INTO phenomenon_fee (phenomenon_name, delivery_method_id, fee) VALUES ('rain', 2, 0.5);
+            INSERT INTO phenomenon_fee (phenomenon_name, delivery_method_id, fee) VALUES ('rain', 3, 0.5);
+
+            INSERT INTO phenomenon_fee (phenomenon_name, delivery_forbidden, delivery_method_id, fee) VALUES ('glaze', true, 2, 0);
+            INSERT INTO phenomenon_fee (phenomenon_name, delivery_forbidden, delivery_method_id, fee) VALUES ('hail', true, 2, 0);
+            INSERT INTO phenomenon_fee (phenomenon_name, delivery_forbidden, delivery_method_id, fee) VALUES ('thunder', true, 2, 0);
+            INSERT INTO phenomenon_fee (phenomenon_name, delivery_forbidden, delivery_method_id, fee) VALUES ('glaze', true, 3, 0);
+            INSERT INTO phenomenon_fee (phenomenon_name, delivery_forbidden, delivery_method_id, fee) VALUES ('hail', true, 3, 0);
+            INSERT INTO phenomenon_fee (phenomenon_name, delivery_forbidden, delivery_method_id, fee) VALUES ('thunder', true, 3, 0);
         </sql>
     </changeSet>
+
 </databaseChangeLog>

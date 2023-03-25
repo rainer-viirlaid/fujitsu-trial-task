@@ -1,6 +1,7 @@
 package com.task.fooddelivery.exception.handler;
 
 import com.task.fooddelivery.exception.AlreadyExistsException;
+import com.task.fooddelivery.exception.DeliveryForbiddenException;
 import com.task.fooddelivery.exception.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -22,5 +23,11 @@ public class ErrorHandler {
     public ResponseEntity<ErrorResponse> handleAlreadyExistsException(AlreadyExistsException e) {
         log.error(e.getMessage(), e);
         return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(DeliveryForbiddenException.class)
+    public ResponseEntity<ErrorResponse> handleDeliveryForbiddenException(DeliveryForbiddenException e) {
+        log.error(e.getMessage() + " due to " + e.reason + ".", e);
+        return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
     }
 }

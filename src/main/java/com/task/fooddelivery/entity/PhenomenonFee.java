@@ -1,7 +1,10 @@
 package com.task.fooddelivery.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
@@ -10,16 +13,17 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class RegionalBaseFee {
+public class PhenomenonFee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
+    @Column(nullable = false, length = 100)
+    private String phenomenonName;
+    @Column(nullable = false)
+    private boolean deliveryForbidden;
     @ManyToOne
     @JoinColumn(nullable = false)
     private DeliveryMethod deliveryMethod;
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private City city;
     @Column(nullable = false)
     private BigDecimal fee;
 }
