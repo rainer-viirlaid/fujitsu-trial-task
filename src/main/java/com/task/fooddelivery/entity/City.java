@@ -1,15 +1,16 @@
 package com.task.fooddelivery.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
-public class DeliveryMethod {
+public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(unique = true, length = 50)
+    @Column(unique = true)
     private String methodName;
 }
