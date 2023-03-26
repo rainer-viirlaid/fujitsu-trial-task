@@ -1,10 +1,13 @@
 package com.task.fooddelivery.dto;
 
+import lombok.Data;
+
 import java.time.OffsetDateTime;
 
+@Data
 public class DeliveryFeeRequestDto {
 
-    public String city;
-    public String method;
-    public OffsetDateTime time;
+    private String city;
+    private String method;
+    private OffsetDateTime time;
 }

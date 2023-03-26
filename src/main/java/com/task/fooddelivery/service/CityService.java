@@ -1,6 +1,7 @@
 package com.task.fooddelivery.service;
 
 import com.task.fooddelivery.entity.City;
+import com.task.fooddelivery.entity.WeatherStation;
 import com.task.fooddelivery.exception.AlreadyExistsException;
 import com.task.fooddelivery.exception.NotFoundException;
 import com.task.fooddelivery.repository.CityRepository;
@@ -14,11 +15,13 @@ import java.util.Optional;
 public class CityService {
 
     private final CityRepository cityRepository;
+    private final WeatherStationService stationService;
 
-    public void addCity(String name) {
+    public void addCity(String name, String stationName) {
         Optional<City> cityOptional = cityRepository.findByCityNameIgnoreCase(name);
         cityOptional.ifPresent(city -> {throw new AlreadyExistsException("city", city.getCityName());});
-        City city = City.builder().cityName(name).build();
+        WeatherStation station = stationService.getStationEntity(stationName);
+        City city = City.builder().cityName(name).weatherStation(station).build();
         cityRepository.save(city);
     }
 
@@ -28,18 +31,16 @@ public class CityService {
         return cityOptional.get();
     }
 
-    public boolean doesCityExist(String cityName) {
-        try {
-            getCityEntity(cityName);
-            return true;
-        } catch (NotFoundException e) {
-            return false;
-        }
+    public String getCityInformation(String cityName) {
+        City city = getCityEntity(cityName);
+        return city.toString();
     }
 
-    public void updateCityName(String oldName, String newName) {
+    public void updateCity(String oldName, String newName, String stationName) {
         City city = getCityEntity(oldName);
+        WeatherStation station = stationService.getStationEntity(stationName);
         city.setCityName(newName);
+        city.setWeatherStation(station);
     }
 
     public void deleteCity(String cityName) {

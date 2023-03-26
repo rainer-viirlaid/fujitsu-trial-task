@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface WeatherStationRepository extends JpaRepository<WeatherStation, Integer> {
 
-    Optional<WeatherStation> findByStationName(String stationName);
+    Optional<WeatherStation> findByStationNameIgnoreCase(String stationName);
 }

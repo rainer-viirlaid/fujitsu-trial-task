@@ -17,4 +17,9 @@ public class City {
     @ManyToOne
     @JoinColumn(nullable = false)
     private WeatherStation weatherStation;
+
+    @Override
+    public String toString() {
+        return "City " + cityName + ", served by " + weatherStation + " weather station";
+    }
 }

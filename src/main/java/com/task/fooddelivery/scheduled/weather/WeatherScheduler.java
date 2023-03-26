@@ -42,7 +42,7 @@ public class WeatherScheduler {
                     ZoneOffset.UTC);
 
             for (Station station : observations.getStations()) {
-                Optional<WeatherStation> weatherStation = weatherStationRepository.findByStationName(station.getName());
+                Optional<WeatherStation> weatherStation = weatherStationRepository.findByStationNameIgnoreCase(station.getName());
                 if (weatherStation.isEmpty()) continue;
                 WeatherReport report = WeatherReport.builder()
                         .weatherStation(weatherStation.get())

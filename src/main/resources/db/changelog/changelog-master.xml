@@ -34,7 +34,7 @@
                 <constraints primaryKey="true" primaryKeyName="pk_weather_report" />
             </column>
             <column name="weather_station_id" type="integer" >
-                <constraints foreignKeyName="fk_weather_report_station" referencedTableName="weather_station" referencedColumnNames="id" />
+                <constraints foreignKeyName="fk_weather_report_station" referencedTableName="weather_station" referencedColumnNames="id" deleteCascade="true" />
             </column>
             <column name="station_name" defaultValue="unknown" type="varchar(255)" />
             <column name="wmo_code" defaultValue="unknown" type="varchar(255)" />

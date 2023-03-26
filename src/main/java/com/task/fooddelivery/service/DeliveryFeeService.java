@@ -19,14 +19,14 @@ public class DeliveryFeeService {
 
     public DeliveryFeeDto calculateDeliveryFee(DeliveryFeeRequestDto deliveryFeeRequestDto) {
         LocalDateTime time = LocalDateTime.ofInstant(OffsetDateTime.now().toInstant(), ZoneOffset.UTC);
-        if (deliveryFeeRequestDto.time != null) time = LocalDateTime.ofInstant(deliveryFeeRequestDto.time.toInstant(), ZoneOffset.UTC);
+        if (deliveryFeeRequestDto.getTime() != null) time = LocalDateTime.ofInstant(deliveryFeeRequestDto.getTime().toInstant(), ZoneOffset.UTC);
         DeliveryFeeDto feeDto = new DeliveryFeeDto();
-        BigDecimal baseFee = baseFeeService.getRegionalBaseFee(deliveryFeeRequestDto.city, deliveryFeeRequestDto.method);
+        BigDecimal baseFee = baseFeeService.getRegionalBaseFee(deliveryFeeRequestDto.getCity(), deliveryFeeRequestDto.getMethod());
         BigDecimal weatherFee = weatherFeeService.getWeatherFee(
-                deliveryFeeRequestDto.city,
-                deliveryFeeRequestDto.method,
+                deliveryFeeRequestDto.getCity(),
+                deliveryFeeRequestDto.getMethod(),
                 time);
-        feeDto.fee = baseFee.add(weatherFee);
+        feeDto.setFee(baseFee.add(weatherFee));
         return feeDto;
     }
 }
