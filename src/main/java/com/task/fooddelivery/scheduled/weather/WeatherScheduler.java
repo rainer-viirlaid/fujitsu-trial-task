@@ -30,7 +30,6 @@ public class WeatherScheduler {
     private final WeatherStationRepository weatherStationRepository;
 
     @Scheduled(cron = "0 15 * * * *", zone = WEATHER_ZONE)
-//    @Scheduled(cron = "*/10 * * * * *", zone = WEATHER_ZONE)
     public void getWeatherData() {
         try {
             URL weather_url = new URL(WEATHER_URL);

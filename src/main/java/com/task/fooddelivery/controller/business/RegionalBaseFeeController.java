@@ -48,8 +48,8 @@ public class RegionalBaseFeeController {
     /**
      * Delete a regional base fee from the database.
      *
-     * @param cityName name of the associated city
-     * @param methodName name of the associated delivery method
+     * @param cityName name of the city
+     * @param methodName name of the delivery method
      */
     @DeleteMapping("/business/regional_base_fee/delete")
     public void deleteRegionalBaseFee(@RequestParam("city") String cityName, @RequestParam("method") String methodName) {

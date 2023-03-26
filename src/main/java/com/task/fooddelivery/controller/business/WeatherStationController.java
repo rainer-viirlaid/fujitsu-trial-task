@@ -47,7 +47,7 @@ public class WeatherStationController {
      * <p>
      * Any related cities must be deleted or updated beforehand. Any related weather reports will be deleted.
      *
-     * @param stationName name of the delivery method
+     * @param stationName name of the weather station
      */
     @DeleteMapping("/business/weather_station/delete")
     public void deleteWeatherStation(@RequestParam("station") String stationName) {

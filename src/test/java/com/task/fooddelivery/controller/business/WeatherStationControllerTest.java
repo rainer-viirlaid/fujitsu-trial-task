@@ -69,6 +69,16 @@ class WeatherStationControllerTest {
     }
 
     @Test
+    public void deleteWeatherStationDeletesReportsTest() throws Exception {
+        String station = "deleteStationDeletesReportsTest";
+        mvc.perform(delete("/business/weather_station/delete").param("station", station))
+                .andExpect(status().isOk());
+        mvc.perform(get("/business/weather_station/read").param("station", station))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value(false));
+    }
+
+    @Test
     public void cannotDeleteStationBeforeCityTest() throws Exception {
         String station = defaultWeatherStations.get(0);
         mvc.perform(delete("/business/weather_station/delete").param("station", station))

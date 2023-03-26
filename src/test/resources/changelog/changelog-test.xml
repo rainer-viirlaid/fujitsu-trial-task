@@ -135,6 +135,9 @@
 
             INSERT INTO wind_speed_fee (min_speed, delivery_method_id, fee) VALUES (88, 2, 6.5);
 
+            INSERT INTO weather_station (station_name) VALUES ('deleteStationDeletesReportsTest');
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (9, 15, -90, 'Snowstorm', '2000-01-01T12:00:00');
         </sql>
     </changeSet>
 
