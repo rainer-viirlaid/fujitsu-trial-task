@@ -18,11 +18,7 @@ public class AirTemperatureFee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Double minTemp;
-    @Column(nullable = false)
-    private boolean minStrict;
     private Double maxTemp;
-    @Column(nullable = false)
-    private boolean maxStrict;
     @Column(nullable = false)
     private boolean deliveryForbidden;
     @ManyToOne

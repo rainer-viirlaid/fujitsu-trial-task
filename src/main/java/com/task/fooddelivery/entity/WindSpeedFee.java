@@ -18,11 +18,7 @@ public class WindSpeedFee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Double minSpeed;
-    @Column(nullable = false)
-    private boolean minStrict;
     private Double maxSpeed;
-    @Column(nullable = false)
-    private boolean maxStrict;
     @Column(nullable = false)
     private boolean deliveryForbidden;
     @ManyToOne

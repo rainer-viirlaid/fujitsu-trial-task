@@ -7,6 +7,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Locale;
 
 @AllArgsConstructor
@@ -14,13 +17,14 @@ import java.util.Locale;
 public class PhenomenonFeeService {
 
     public BigDecimal calculatePhenomenonFee(String phenomenon, DeliveryMethod method) {
-        if (phenomenon == null) return new BigDecimal(0);
+        List<BigDecimal> fees = new ArrayList<>(List.of(new BigDecimal(0)));
+        if (phenomenon == null) return fees.get(0);
         for (PhenomenonFee rule : method.getPhenomenonFees()) {
             if (rule.getPhenomenonName().toLowerCase(Locale.ROOT).contains(phenomenon)) {
                 if (rule.isDeliveryForbidden()) throw new DeliveryForbiddenException(phenomenon);
-                return rule.getFee();
+                fees.add(rule.getFee());
             }
         }
-        return new BigDecimal(0);
+        return fees.stream().max(Comparator.naturalOrder()).get();
     }
 }

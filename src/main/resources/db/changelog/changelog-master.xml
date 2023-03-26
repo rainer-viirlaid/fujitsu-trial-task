@@ -85,13 +85,7 @@
                 <constraints primaryKey="true" primaryKeyName="pk_air_temperature_fee" />
             </column>
             <column name="min_temp" type="double" />
-            <column name="min_strict" type="boolean" defaultValue="false" >
-                <constraints nullable="false" />
-            </column>
             <column name="max_temp" type="double" />
-            <column name="max_strict" type="boolean" defaultValue="false" >
-                <constraints nullable="false" />
-            </column>
             <column name="delivery_forbidden" type="boolean" defaultValue="false" >
                 <constraints nullable="false" />
             </column>
@@ -107,13 +101,7 @@
                 <constraints primaryKey="true" primaryKeyName="pk_wind_speed_fee" />
             </column>
             <column name="min_speed" type="double" />
-            <column name="min_strict" type="boolean" defaultValue="false" >
-                <constraints nullable="false" />
-            </column>
             <column name="max_speed" type="double" />
-            <column name="max_strict" type="boolean" defaultValue="false" >
-                <constraints nullable="false" />
-            </column>
             <column name="delivery_forbidden" type="boolean" defaultValue="false" >
                 <constraints nullable="false" />
             </column>
@@ -169,13 +157,13 @@
             INSERT INTO regional_base_fee (delivery_method_id, city_id, fee) VALUES (2, 3, 2.5);
             INSERT INTO regional_base_fee (delivery_method_id, city_id, fee) VALUES (3, 3, 2);
 
-            INSERT INTO air_temperature_fee (max_temp, max_strict, delivery_method_id, fee) VALUES (-10, true, 2, 1);
-            INSERT INTO air_temperature_fee (max_temp, max_strict, delivery_method_id, fee) VALUES (-10, true, 3, 1);
+            INSERT INTO air_temperature_fee (max_temp, delivery_method_id, fee) VALUES (-10, 2, 1);
+            INSERT INTO air_temperature_fee (max_temp, delivery_method_id, fee) VALUES (-10, 3, 1);
             INSERT INTO air_temperature_fee (min_temp, max_temp, delivery_method_id, fee) VALUES (-10, 0, 2, 0.5);
             INSERT INTO air_temperature_fee (min_temp, max_temp, delivery_method_id, fee) VALUES (-10, 0, 3, 0.5);
 
             INSERT INTO wind_speed_fee (min_speed, max_speed, delivery_method_id, fee) VALUES (10, 20, 3, 0.5);
-            INSERT INTO wind_speed_fee (min_speed, min_strict, delivery_forbidden, delivery_method_id, fee) VALUES (20, true, true, 3, 0);
+            INSERT INTO wind_speed_fee (min_speed, delivery_forbidden, delivery_method_id, fee) VALUES (20, true, 3, 0);
 
             INSERT INTO phenomenon_fee (phenomenon_name, delivery_method_id, fee) VALUES ('snow', 2, 1);
             INSERT INTO phenomenon_fee (phenomenon_name, delivery_method_id, fee) VALUES ('sleet', 2, 1);

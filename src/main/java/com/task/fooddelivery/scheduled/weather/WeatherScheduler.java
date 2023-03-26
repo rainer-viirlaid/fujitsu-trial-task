@@ -15,7 +15,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.Optional;
 
 @Slf4j
@@ -30,6 +30,7 @@ public class WeatherScheduler {
     private final WeatherStationRepository weatherStationRepository;
 
     @Scheduled(cron = "0 15 * * * *", zone = WEATHER_ZONE)
+//    @Scheduled(cron = "*/10 * * * * *", zone = WEATHER_ZONE)
     public void getWeatherData() {
         try {
             URL weather_url = new URL(WEATHER_URL);
@@ -38,7 +39,7 @@ public class WeatherScheduler {
 
             LocalDateTime time = LocalDateTime.ofInstant(
                     Instant.ofEpochSecond(observations.getTimestamp()),
-                    ZoneId.of(WEATHER_ZONE));
+                    ZoneOffset.UTC);
 
             for (Station station : observations.getStations()) {
                 Optional<WeatherStation> weatherStation = weatherStationRepository.findByStationName(station.getName());

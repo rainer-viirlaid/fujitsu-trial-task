@@ -17,12 +17,13 @@ import java.util.List;
 @Service
 public class WeatherReportService {
 
+    public static final int WEATHER_REPORT_TIME_DELTA = 2;
     private final WeatherReportRepository reportRepository;
 
     public WeatherReport getNearestReportInTime(WeatherStation station, LocalDateTime time) {
         List<WeatherReport> reports = reportRepository.findAllByWeatherStationAndTimestampBetween(station,
-                time.minus(1, ChronoUnit.HOURS),
-                time.plus(1, ChronoUnit.HOURS));
+                time.minus(WEATHER_REPORT_TIME_DELTA, ChronoUnit.HOURS),
+                time.plus(WEATHER_REPORT_TIME_DELTA, ChronoUnit.HOURS));
         if (reports.isEmpty()) throw new NotFoundException("No report from '" + station.getStationName() + "' found near given time. Please change requested timestamp or wait for new weather data to be retrieved.");
         return reports
                 .stream()

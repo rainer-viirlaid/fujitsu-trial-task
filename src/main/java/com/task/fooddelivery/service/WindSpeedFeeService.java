@@ -7,29 +7,23 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 @AllArgsConstructor
 @Service
 public class WindSpeedFeeService {
 
     public BigDecimal calculateWindSpeedFee(Double windSpeed, DeliveryMethod method) {
-        if (windSpeed == null) return new BigDecimal(0);
+        List<BigDecimal> fees = new ArrayList<>(List.of(new BigDecimal(0)));
+        if (windSpeed == null) return fees.get(0);
         for (WindSpeedFee rule : method.getWindSpeedFees()) {
-            if (checkIfWindSpeedRuleApplies(windSpeed, rule)) {
+            if (rule.getMinSpeedNotNull() <= windSpeed && windSpeed <= rule.getMaxSpeedNotNull()) {
                 if (rule.isDeliveryForbidden()) throw new DeliveryForbiddenException("wind speed (" + windSpeed + " m/s)");
-                return rule.getFee();
+                fees.add(rule.getFee());
             }
         }
-        return new BigDecimal(0);
-    }
-
-    private boolean checkIfWindSpeedRuleApplies(double windSpeed, WindSpeedFee rule) {
-        boolean minInBounds;
-        boolean maxInBounds;
-        if (rule.isMinStrict()) minInBounds = rule.getMinSpeedNotNull() < windSpeed;
-        else minInBounds = rule.getMinSpeedNotNull() <= windSpeed;
-        if (rule.isMaxStrict()) maxInBounds = rule.getMaxSpeedNotNull() > windSpeed;
-        else maxInBounds = rule.getMaxSpeedNotNull() >= windSpeed;
-        return minInBounds && maxInBounds;
+        return fees.stream().max(Comparator.naturalOrder()).get();
     }
 }

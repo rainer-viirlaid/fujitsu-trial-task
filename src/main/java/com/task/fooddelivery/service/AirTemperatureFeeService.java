@@ -7,29 +7,23 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 @AllArgsConstructor
 @Service
 public class AirTemperatureFeeService {
 
     public BigDecimal calculateAirTemperatureFee(Double airTemperature, DeliveryMethod method) {
-        if (airTemperature == null) return new BigDecimal(0);
+        List<BigDecimal> fees = new ArrayList<>(List.of(new BigDecimal(0)));
+        if (airTemperature == null) return fees.get(0);
         for (AirTemperatureFee rule : method.getAirTemperatureFees()) {
-            if (checkIfTemperatureRuleApplies(airTemperature, rule)) {
+            if (rule.getMinTempNotNull() <= airTemperature && airTemperature <= rule.getMaxTempNotNull()) {
                 if (rule.isDeliveryForbidden()) throw new DeliveryForbiddenException("air temperature (" + airTemperature + "°C)");
-                return rule.getFee();
+                fees.add(rule.getFee());
             }
         }
-        return new BigDecimal(0);
-    }
-
-    private boolean checkIfTemperatureRuleApplies(double temperature, AirTemperatureFee rule) {
-        boolean minInBounds;
-        boolean maxInBounds;
-        if (rule.isMinStrict()) minInBounds = rule.getMinTempNotNull() < temperature;
-        else minInBounds = rule.getMinTempNotNull() <= temperature;
-        if (rule.isMaxStrict()) maxInBounds = rule.getMaxTempNotNull() > temperature;
-        else maxInBounds = rule.getMaxTempNotNull() >= temperature;
-        return minInBounds && maxInBounds;
+        return fees.stream().max(Comparator.naturalOrder()).get();
     }
 }
