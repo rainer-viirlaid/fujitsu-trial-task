@@ -30,4 +30,10 @@ public class ErrorHandler {
         log.error(e.getMessage() + " due to " + e.reason + ".", e);
         return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleException(Exception e) {
+        log.error("An unknown error has occurred.", e);
+        return new ResponseEntity<>(new ErrorResponse("Internal Server Error"), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

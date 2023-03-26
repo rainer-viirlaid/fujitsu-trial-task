@@ -16,7 +16,7 @@ public class WeatherStationController {
      * @param stationName name of the weather station
      */
     @PostMapping("/business/weather_station/create")
-    public void addWeatherStation(@RequestParam("station") String stationName) {
+    public void createWeatherStation(@RequestParam("station") String stationName) {
         stationService.addWeatherStation(stationName);
     }
 

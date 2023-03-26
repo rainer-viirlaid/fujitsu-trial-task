@@ -4,6 +4,7 @@ import com.task.fooddelivery.dto.AirTemperatureFeeDto;
 import com.task.fooddelivery.entity.AirTemperatureFee;
 import com.task.fooddelivery.entity.DeliveryMethod;
 import com.task.fooddelivery.exception.DeliveryForbiddenException;
+import com.task.fooddelivery.exception.NotFoundException;
 import com.task.fooddelivery.repository.AirTemperatureFeeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -47,6 +48,7 @@ public class AirTemperatureFeeService {
     public void deleteFees(Double minTemp, Double maxTemp, String methodName) {
         DeliveryMethod method = methodService.getDeliveryMethodEntity(methodName);
         List<AirTemperatureFee> fees = feeRepository.findAllByMinTempAndMaxTempAndDeliveryMethod(minTemp, maxTemp, method);
+        if (fees.isEmpty()) throw new NotFoundException("No suitable temperature fee rules found.");
         feeRepository.deleteAll(fees);
     }
 }

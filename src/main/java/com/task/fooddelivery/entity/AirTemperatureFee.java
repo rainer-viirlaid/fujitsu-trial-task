@@ -28,7 +28,7 @@ public class AirTemperatureFee {
     private BigDecimal fee;
 
     public Double getMinTempNotNull() {
-        return minTemp == null ? Double.MIN_VALUE : minTemp;
+        return minTemp == null ? -Double.MAX_VALUE : minTemp;
     }
 
     public double getMaxTempNotNull() {

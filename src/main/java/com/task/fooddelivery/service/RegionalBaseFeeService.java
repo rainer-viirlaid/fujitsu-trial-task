@@ -45,6 +45,7 @@ public class RegionalBaseFeeService {
     public void updateRegionalBaseFee(RegionalBaseFeeDto rbfDto) {
         RegionalBaseFee regionalBaseFee = getRegionalBaseFeeEntity(rbfDto.getCityName(), rbfDto.getMethodName());
         regionalBaseFee.setFee(rbfDto.getFee());
+        baseFeeRepository.save(regionalBaseFee);
     }
 
     public void deleteRegionalBaseFee(String cityName, String methodName) {

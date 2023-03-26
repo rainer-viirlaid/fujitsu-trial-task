@@ -22,4 +22,9 @@ public class DeliveryMethod {
     private List<AirTemperatureFee> airTemperatureFees;
     @OneToMany(mappedBy = "deliveryMethod")
     private List<WindSpeedFee> windSpeedFees;
+
+    @Override
+    public String toString() {
+        return "Delivery method " + methodName + ".";
+    }
 }

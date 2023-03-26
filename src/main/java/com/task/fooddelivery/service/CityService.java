@@ -41,6 +41,7 @@ public class CityService {
         WeatherStation station = stationService.getStationEntity(stationName);
         city.setCityName(newName);
         city.setWeatherStation(station);
+        cityRepository.save(city);
     }
 
     public void deleteCity(String cityName) {

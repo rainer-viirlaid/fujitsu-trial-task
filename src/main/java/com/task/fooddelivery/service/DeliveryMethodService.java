@@ -40,6 +40,7 @@ public class DeliveryMethodService {
     public void updateDeliveryMethodName(String oldName, String newName) {
         DeliveryMethod method = getDeliveryMethodEntity(oldName);
         method.setMethodName(newName);
+        methodRepository.save(method);
     }
 
     public void deleteDeliveryMethod(String methodName) {

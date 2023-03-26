@@ -20,6 +20,6 @@ public class City {
 
     @Override
     public String toString() {
-        return "City " + cityName + ", served by " + weatherStation + " weather station";
+        return "City " + cityName + ", served by " + weatherStation.getStationName() + " weather station.";
     }
 }

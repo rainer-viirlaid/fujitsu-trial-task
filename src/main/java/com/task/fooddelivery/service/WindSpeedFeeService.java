@@ -4,6 +4,7 @@ import com.task.fooddelivery.dto.WindSpeedFeeDto;
 import com.task.fooddelivery.entity.DeliveryMethod;
 import com.task.fooddelivery.entity.WindSpeedFee;
 import com.task.fooddelivery.exception.DeliveryForbiddenException;
+import com.task.fooddelivery.exception.NotFoundException;
 import com.task.fooddelivery.repository.WindSpeedFeeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -47,6 +48,7 @@ public class WindSpeedFeeService {
     public void deleteFees(Double minSpeed, Double maxSpeed, String methodName) {
         DeliveryMethod method = methodService.getDeliveryMethodEntity(methodName);
         List<WindSpeedFee> fees = feeRepository.findAllByMinSpeedAndMaxSpeedAndDeliveryMethod(minSpeed, maxSpeed, method);
+        if (fees.isEmpty()) throw new NotFoundException("No suitable wind speed fee rules found.");
         feeRepository.deleteAll(fees);
     }
 }

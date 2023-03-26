@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+
+    <include file="db/changelog/changelog-master.xml" />
+
+    <changeSet id="testing data 1" author="rainer viirlaid">
+        <sql>
+            INSERT INTO delivery_method (method_name) VALUES ('updateDeliveryMethodTest');
+            INSERT INTO delivery_method (method_name) VALUES ('deleteDeliveryMethodTest');
+
+            INSERT INTO weather_station (station_name) VALUES ('updateStationTest');
+            INSERT INTO weather_station (station_name) VALUES ('deleteStationTest');
+
+            INSERT INTO city (city_name, weather_station_id) VALUES ('updateCityNameTest', 3);
+            INSERT INTO city (city_name, weather_station_id) VALUES ('updateCityStationTest', 3);
+            INSERT INTO city (city_name, weather_station_id) VALUES ('deleteCityTest', 3);
+
+            INSERT INTO city (city_name, weather_station_id) VALUES ('createBaseFeeTestCity', 3);
+            INSERT INTO city (city_name, weather_station_id) VALUES ('updateBaseFeeTestCity', 3);
+            INSERT INTO regional_base_fee (delivery_method_id, city_id, fee) VALUES (1, 8, 51.5);
+            INSERT INTO city (city_name, weather_station_id) VALUES ('deleteBaseFeeTestCity', 3);
+            INSERT INTO regional_base_fee (delivery_method_id, city_id, fee) VALUES (1, 9, 51.5);
+
+            -- All normal H:01
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (1, 1, 0, 'Overcast', '2000-01-01T01:00:00');
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (2, 1, 0, 'Overcast', '2000-01-01T01:00:00');
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (3, 1, 0, 'Overcast', '2000-01-01T01:00:00');
+            -- -10 degrees H:02
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (1, -10, 0, 'Overcast', '2000-01-01T02:00:00');
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (2, -10, 0, 'Overcast', '2000-01-01T02:00:00');
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (3, -10, 0, 'Overcast', '2000-01-01T02:00:00');
+            -- 0 degrees H:03
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (1, 0, 0, 'Overcast', '2000-01-01T03:00:00');
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (2, 0, 0, 'Overcast', '2000-01-01T03:00:00');
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (3, 0, 0, 'Overcast', '2000-01-01T03:00:00');
+            -- 10 m/s H:04
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (1, 1, 10, 'Overcast', '2000-01-01T04:00:00');
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (2, 1, 10, 'Overcast', '2000-01-01T04:00:00');
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (3, 1, 10, 'Overcast', '2000-01-01T04:00:00');
+            -- 20 m/s H:05
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (1, 1, 20, 'Overcast', '2000-01-01T05:00:00');
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (2, 1, 20, 'Overcast', '2000-01-01T05:00:00');
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (3, 1, 20, 'Overcast', '2000-01-01T05:00:00');
+            -- Snow H:06
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (1, 1, 0, 'Light Snow', '2000-01-01T06:00:00');
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (2, 1, 0, 'Moderate snow', '2000-01-01T06:00:00');
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (3, 1, 0, 'snowstorm', '2000-01-01T06:00:00');
+            -- Sleet H:07
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (1, 1, 0, 'Light Sleet', '2000-01-01T07:00:00');
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (2, 1, 0, 'Moderate Sleet', '2000-01-01T07:00:00');
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (3, 1, 0, 'sleetstorm', '2000-01-01T07:00:00');
+            -- rain H:08
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (1, 1, 0, 'Light Rain', '2000-01-01T08:00:00');
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (2, 1, 0, 'Moderate Shower', '2000-01-01T08:00:00');
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (3, 1, 0, 'Rainstorm', '2000-01-01T08:00:00');
+            -- glaze H:09
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (1, 1, 0, 'Light Glaze', '2000-01-01T09:00:00');
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (2, 1, 0, 'Moderate Glaze', '2000-01-01T09:00:00');
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (3, 1, 0, 'Glazestorm', '2000-01-01T09:00:00');
+            -- hail H:10
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (1, 1, 0, 'Light hail', '2000-01-01T10:00:00');
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (2, 1, 0, 'Moderate hail', '2000-01-01T10:00:00');
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (3, 1, 0, 'hailstorm', '2000-01-01T10:00:00');
+            -- thunder H:11
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (1, 1, 0, 'Light thunder', '2000-01-01T11:00:00');
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (2, 1, 0, 'Moderate thunder', '2000-01-01T11:00:00');
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (3, 1, 0, 'thunderstorm', '2000-01-01T11:00:00');
+            -- -50 degrees and 19 m/s and snow H:12
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (1, -50, 19, 'Snowstorm', '2000-01-01T12:00:00');
+
+
+            INSERT INTO weather_station (station_name) VALUES ('addAirTemperatureFeeTestStation');
+            INSERT INTO city (city_name, weather_station_id) VALUES ('addAirTemperatureFeeTestCity', 6);
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (6, 500, 19, 'Snowstorm', '2000-01-01T12:00:00');
+            INSERT INTO regional_base_fee (delivery_method_id, city_id, fee) VALUES (1, 10, 0);
+
+            INSERT INTO air_temperature_fee (max_temp, delivery_method_id, fee) VALUES (-88, 2, 6.5);
+
+            INSERT INTO weather_station (station_name) VALUES ('addPhenomenonFeeTestStation');
+            INSERT INTO city (city_name, weather_station_id) VALUES ('addPhenomenonFeeTestCity', 7);
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (7, 500, 19, 'Alien Invasion', '2000-01-01T12:00:00');
+            INSERT INTO regional_base_fee (delivery_method_id, city_id, fee) VALUES (1, 11, 0);
+
+            INSERT INTO phenomenon_fee (phenomenon_name, delivery_method_id, fee) VALUES ('volcanic eruption', 2, 6.5);
+
+            INSERT INTO weather_station (station_name) VALUES ('addWindSpeedFeeTestStation');
+            INSERT INTO city (city_name, weather_station_id) VALUES ('addWindSpeedFeeTestCity', 8);
+            INSERT INTO weather_report (weather_station_id, air_temperature, wind_speed, phenomenon, timestamp)
+            VALUES (8, 15, -90, 'Snowstorm', '2000-01-01T12:00:00');
+            INSERT INTO regional_base_fee (delivery_method_id, city_id, fee) VALUES (1, 12, 0);
+
+            INSERT INTO wind_speed_fee (min_speed, delivery_method_id, fee) VALUES (88, 2, 6.5);
+
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

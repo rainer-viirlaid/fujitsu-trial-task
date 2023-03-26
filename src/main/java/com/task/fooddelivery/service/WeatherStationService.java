@@ -1,6 +1,5 @@
 package com.task.fooddelivery.service;
 
-import com.task.fooddelivery.entity.City;
 import com.task.fooddelivery.entity.WeatherStation;
 import com.task.fooddelivery.exception.AlreadyExistsException;
 import com.task.fooddelivery.exception.NotFoundException;
@@ -41,6 +40,7 @@ public class WeatherStationService {
     public void updateWeatherStationName(String oldName, String newName) {
         WeatherStation station = getStationEntity(oldName);
         station.setStationName(newName);
+        stationRepository.save(station);
     }
 
     public void deleteWeatherStation(String stationName) {

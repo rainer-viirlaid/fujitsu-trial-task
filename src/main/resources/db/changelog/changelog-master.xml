@@ -171,7 +171,13 @@
             INSERT INTO phenomenon_fee (phenomenon_name, delivery_method_id, fee) VALUES ('sleet', 3, 1);
 
             INSERT INTO phenomenon_fee (phenomenon_name, delivery_method_id, fee) VALUES ('rain', 2, 0.5);
+            INSERT INTO phenomenon_fee (phenomenon_name, delivery_method_id, fee) VALUES ('Light shower', 2, 0.5);
+            INSERT INTO phenomenon_fee (phenomenon_name, delivery_method_id, fee) VALUES ('Moderate shower', 2, 0.5);
+            INSERT INTO phenomenon_fee (phenomenon_name, delivery_method_id, fee) VALUES ('Heavy shower', 2, 0.5);
             INSERT INTO phenomenon_fee (phenomenon_name, delivery_method_id, fee) VALUES ('rain', 3, 0.5);
+            INSERT INTO phenomenon_fee (phenomenon_name, delivery_method_id, fee) VALUES ('Light shower', 3, 0.5);
+            INSERT INTO phenomenon_fee (phenomenon_name, delivery_method_id, fee) VALUES ('Moderate shower', 3, 0.5);
+            INSERT INTO phenomenon_fee (phenomenon_name, delivery_method_id, fee) VALUES ('Heavy shower', 3, 0.5);
 
             INSERT INTO phenomenon_fee (phenomenon_name, delivery_forbidden, delivery_method_id, fee) VALUES ('glaze', true, 2, 0);
             INSERT INTO phenomenon_fee (phenomenon_name, delivery_forbidden, delivery_method_id, fee) VALUES ('hail', true, 2, 0);

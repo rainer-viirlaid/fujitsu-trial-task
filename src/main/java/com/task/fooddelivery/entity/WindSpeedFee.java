@@ -28,7 +28,7 @@ public class WindSpeedFee {
     private BigDecimal fee;
 
     public Double getMinSpeedNotNull() {
-        return minSpeed == null ? Double.MIN_VALUE : minSpeed;
+        return minSpeed == null ? -Double.MAX_VALUE : minSpeed;
     }
 
     public double getMaxSpeedNotNull() {

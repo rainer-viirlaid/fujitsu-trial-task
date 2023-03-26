@@ -17,7 +17,7 @@ public class CityController {
      * @param stationName name of the associated weather station
      */
     @PostMapping("/business/city/create")
-    public void addCity(@RequestParam("city") String cityName, @RequestParam("station") String stationName) {
+    public void createCity(@RequestParam("city") String cityName, @RequestParam("station") String stationName) {
         cityService.addCity(cityName, stationName);
     }
 
