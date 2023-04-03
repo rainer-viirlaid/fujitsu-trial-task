@@ -24,8 +24,7 @@ public class WeatherStationService {
 
     public WeatherStation getStationEntity(String stationName) {
         Optional<WeatherStation> stationOptional = stationRepository.findByStationNameIgnoreCase(stationName);
-        stationOptional.orElseThrow(() -> {throw new NotFoundException("weather station", stationName);});
-        return stationOptional.get();
+        return stationOptional.orElseThrow(() -> new NotFoundException("weather station", stationName));
     }
 
     public boolean doesWeatherStationExist(String stationName) {

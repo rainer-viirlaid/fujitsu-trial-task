@@ -23,15 +23,15 @@ public class PhenomenonFeeService {
     private final DeliveryMethodService methodService;
 
     public BigDecimal calculatePhenomenonFee(String phenomenon, DeliveryMethod method) {
-        List<BigDecimal> fees = new ArrayList<>(List.of(new BigDecimal(0)));
-        if (phenomenon == null) return fees.get(0);
+        List<BigDecimal> fees = new ArrayList<>();
+        if (phenomenon == null) return new BigDecimal(0);
         for (PhenomenonFee rule : method.getPhenomenonFees()) {
             if (phenomenon.toLowerCase(Locale.ROOT).contains(rule.getPhenomenonName().toLowerCase(Locale.ROOT))) {
                 if (rule.isDeliveryForbidden()) throw new DeliveryForbiddenException(phenomenon);
                 fees.add(rule.getFee());
             }
         }
-        return fees.stream().max(Comparator.naturalOrder()).get();
+        return fees.stream().max(Comparator.naturalOrder()).orElse(new BigDecimal(0));
     }
 
     public void addNewFee(PhenomenonFeeDto feeDto) {

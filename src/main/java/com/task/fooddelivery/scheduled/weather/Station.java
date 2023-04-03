@@ -27,7 +27,7 @@ public class Station {
     private double windspeed;
     private double windspeedmax;
     private double waterlevel;
-    private double waterlevel_eh2000;
+    private double waterlevelEh2000;
     private double watertemperature;
     private double uvindex;
 }

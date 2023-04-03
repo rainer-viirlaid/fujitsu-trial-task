@@ -38,8 +38,7 @@ public class RegionalBaseFeeService {
         City city = cityService.getCityEntity(cityName);
         DeliveryMethod method = methodService.getDeliveryMethodEntity(methodName);
         Optional<RegionalBaseFee> baseFeeOptional = baseFeeRepository.findByCityAndDeliveryMethod(city, method);
-        baseFeeOptional.orElseThrow(() -> {throw new NotFoundException("base fee", cityName + ", " + methodName);});
-        return baseFeeOptional.get();
+        return baseFeeOptional.orElseThrow(() -> new NotFoundException("base fee", cityName + ", " + methodName));
     }
 
     public void updateRegionalBaseFee(RegionalBaseFeeDto rbfDto) {

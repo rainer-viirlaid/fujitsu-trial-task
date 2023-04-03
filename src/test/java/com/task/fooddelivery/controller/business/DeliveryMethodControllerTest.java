@@ -27,7 +27,7 @@ class DeliveryMethodControllerTest {
     );
 
     @Test
-    public void getDefaultDeliveryMethodsTest() throws Exception {
+    void getDefaultDeliveryMethodsTest() throws Exception {
         for (String method : defaultDeliveryMethods) {
             mvc.perform(get("/business/delivery_method/read").param("method", method))
                     .andExpect(status().isOk());
@@ -35,7 +35,7 @@ class DeliveryMethodControllerTest {
     }
 
     @Test
-    public void createDeliveryMethodTest() throws Exception {
+    void createDeliveryMethodTest() throws Exception {
         String method = "createDeliveryMethodTest";
         mvc.perform(get("/business/delivery_method/read").param("method", method))
                 .andExpect(status().isOk())
@@ -48,7 +48,7 @@ class DeliveryMethodControllerTest {
     }
 
     @Test
-    public void updateDeliveryMethodTest() throws Exception {
+    void updateDeliveryMethodTest() throws Exception {
         String method = "updateDeliveryMethodTest";
         String methodNew = "updateDeliveryMethodTestRenamed";
         mvc.perform(put("/business/delivery_method/update").param("old_name", method).param("new_name", methodNew))
@@ -59,7 +59,7 @@ class DeliveryMethodControllerTest {
     }
 
     @Test
-    public void deleteDeliveryMethodTest() throws Exception {
+    void deleteDeliveryMethodTest() throws Exception {
         String method = "deleteDeliveryMethodTest";
         mvc.perform(delete("/business/delivery_method/delete").param("method", method))
                 .andExpect(status().isOk());
@@ -69,7 +69,7 @@ class DeliveryMethodControllerTest {
     }
 
     @Test
-    public void cannotDeleteDeliveryMethodBeforeRegionalBaseFeeTest() throws Exception {
+    void cannotDeleteDeliveryMethodBeforeRegionalBaseFeeTest() throws Exception {
         String method = defaultDeliveryMethods.get(0);
         mvc.perform(delete("/business/delivery_method/delete").param("method", method))
                 .andExpect(status().is5xxServerError());

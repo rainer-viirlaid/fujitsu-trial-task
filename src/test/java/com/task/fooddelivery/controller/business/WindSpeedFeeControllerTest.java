@@ -28,7 +28,7 @@ class WindSpeedFeeControllerTest {
     private MockMvc mvc;
 
     @Test
-    public void addWindSpeedFeeTest() throws Exception {
+    void addWindSpeedFeeTest() throws Exception {
         String city = "addWindSpeedFeeTestCity";
         String time = "2000-01-01T12:00:00Z";
         String method = "car";
@@ -59,7 +59,7 @@ class WindSpeedFeeControllerTest {
     }
 
     @Test
-    public void deleteWindSpeedTest() throws Exception {
+    void deleteWindSpeedTest() throws Exception {
         Double minSpeed = 88d;
         String method = "scooter";
         WindSpeedFeeDeletionDto deletionDto = WindSpeedFeeDeletionDto.builder()

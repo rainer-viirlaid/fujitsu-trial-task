@@ -24,8 +24,7 @@ public class DeliveryMethodService {
 
     public DeliveryMethod getDeliveryMethodEntity(String methodName) {
         Optional<DeliveryMethod> methodOptional = methodRepository.findByMethodNameIgnoreCase(methodName);
-        methodOptional.orElseThrow(() -> {throw new NotFoundException("delivery method", methodName);});
-        return methodOptional.get();
+        return methodOptional.orElseThrow(() -> new NotFoundException("delivery method", methodName));
     }
 
     public boolean doesDeliveryMethodExist(String methodName) {

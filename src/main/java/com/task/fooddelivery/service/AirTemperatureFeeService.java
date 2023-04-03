@@ -22,15 +22,15 @@ public class AirTemperatureFeeService {
     private final DeliveryMethodService methodService;
 
     public BigDecimal calculateAirTemperatureFee(Double airTemperature, DeliveryMethod method) {
-        List<BigDecimal> fees = new ArrayList<>(List.of(new BigDecimal(0)));
-        if (airTemperature == null) return fees.get(0);
+        List<BigDecimal> fees = new ArrayList<>();
+        if (airTemperature == null) return new BigDecimal(0);
         for (AirTemperatureFee rule : method.getAirTemperatureFees()) {
             if (rule.getMinTempNotNull() <= airTemperature && airTemperature <= rule.getMaxTempNotNull()) {
                 if (rule.isDeliveryForbidden()) throw new DeliveryForbiddenException("air temperature (" + airTemperature + "°C)");
                 fees.add(rule.getFee());
             }
         }
-        return fees.stream().max(Comparator.naturalOrder()).get();
+        return fees.stream().max(Comparator.naturalOrder()).orElse(new BigDecimal(0));
     }
 
     public void addNewFee(AirTemperatureFeeDto feeDto) {

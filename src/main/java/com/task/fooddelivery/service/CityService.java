@@ -27,8 +27,7 @@ public class CityService {
 
     public City getCityEntity(String cityName) {
         Optional<City> cityOptional = cityRepository.findByCityNameIgnoreCase(cityName);
-        cityOptional.orElseThrow(() -> {throw new NotFoundException("city", cityName);});
-        return cityOptional.get();
+        return cityOptional.orElseThrow(() -> new NotFoundException("city", cityName));
     }
 
     public String getCityInformation(String cityName) {

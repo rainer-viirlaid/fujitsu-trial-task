@@ -27,7 +27,7 @@ class CityControllerTest {
     );
 
     @Test
-    public void getDefaultCitiesTest() throws Exception {
+    void getDefaultCitiesTest() throws Exception {
         mvc.perform(get("/business/city/read").param("city", "Tallinn"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$")
@@ -39,7 +39,7 @@ class CityControllerTest {
     }
 
     @Test
-    public void createCityTest() throws Exception {
+    void createCityTest() throws Exception {
         String city = "createCityTest";
         String station = "Pärnu";
         mvc.perform(get("/business/city/read").param("city", city))
@@ -51,7 +51,7 @@ class CityControllerTest {
     }
 
     @Test
-    public void cannotCreateDuplicateCityTest() throws Exception {
+    void cannotCreateDuplicateCityTest() throws Exception {
         String city = "Tallinn";
         String station = "Pärnu";
         mvc.perform(post("/business/city/create").param("city", city).param("station", station))
@@ -59,7 +59,7 @@ class CityControllerTest {
     }
 
     @Test
-    public void updateCityNameTest() throws Exception {
+    void updateCityNameTest() throws Exception {
         String station = "Pärnu";
         String city = "updateCityNameTest";
         String cityNew = "updateCityNameTestRenamed";
@@ -70,7 +70,7 @@ class CityControllerTest {
     }
 
     @Test
-    public void updateCityStationTest() throws Exception {
+    void updateCityStationTest() throws Exception {
         String stationNew = "Tallinn-Harku";
         String city = "updateCityStationTest";
         mvc.perform(put("/business/city/update").param("old_name", city).param("new_name", city).param("station", stationNew))
@@ -82,7 +82,7 @@ class CityControllerTest {
     }
 
     @Test
-    public void deleteCityTest() throws Exception {
+    void deleteCityTest() throws Exception {
         String city = "deleteCityTest";
         mvc.perform(delete("/business/city/delete").param("city", city))
                 .andExpect(status().isOk());
@@ -91,7 +91,7 @@ class CityControllerTest {
     }
 
     @Test
-    public void cannotDeleteCityBeforeRegionalBaseFeeTest() throws Exception {
+    void cannotDeleteCityBeforeRegionalBaseFeeTest() throws Exception {
         String city = defaultCities.get(0);
         mvc.perform(delete("/business/city/delete").param("city", city))
                 .andExpect(status().is5xxServerError());

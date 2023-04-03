@@ -32,9 +32,9 @@ public class WeatherScheduler {
     @Scheduled(cron = "0 15 * * * *", zone = WEATHER_ZONE)
     public void getWeatherData() {
         try {
-            URL weather_url = new URL(WEATHER_URL);
+            URL weatherUrl = new URL(WEATHER_URL);
             JAXBContext context = JAXBContext.newInstance(Observations.class);
-            Observations observations = (Observations) context.createUnmarshaller().unmarshal(weather_url);
+            Observations observations = (Observations) context.createUnmarshaller().unmarshal(weatherUrl);
 
             LocalDateTime time = LocalDateTime.ofInstant(
                     Instant.ofEpochSecond(observations.getTimestamp()),

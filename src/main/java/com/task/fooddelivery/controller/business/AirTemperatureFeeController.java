@@ -2,10 +2,7 @@ package com.task.fooddelivery.controller.business;
 
 import com.task.fooddelivery.dto.AirTemperatureFeeDeletionDto;
 import com.task.fooddelivery.dto.AirTemperatureFeeDto;
-import com.task.fooddelivery.dto.WindSpeedFeeDeletionDto;
-import com.task.fooddelivery.dto.WindSpeedFeeDto;
 import com.task.fooddelivery.service.AirTemperatureFeeService;
-import com.task.fooddelivery.service.WindSpeedFeeService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;

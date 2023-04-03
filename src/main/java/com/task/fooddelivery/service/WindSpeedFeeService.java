@@ -22,15 +22,15 @@ public class WindSpeedFeeService {
     private final DeliveryMethodService methodService;
 
     public BigDecimal calculateWindSpeedFee(Double windSpeed, DeliveryMethod method) {
-        List<BigDecimal> fees = new ArrayList<>(List.of(new BigDecimal(0)));
-        if (windSpeed == null) return fees.get(0);
+        List<BigDecimal> fees = new ArrayList<>();
+        if (windSpeed == null) return new BigDecimal(0);
         for (WindSpeedFee rule : method.getWindSpeedFees()) {
             if (rule.getMinSpeedNotNull() <= windSpeed && windSpeed <= rule.getMaxSpeedNotNull()) {
                 if (rule.isDeliveryForbidden()) throw new DeliveryForbiddenException("wind speed (" + windSpeed + " m/s)");
                 fees.add(rule.getFee());
             }
         }
-        return fees.stream().max(Comparator.naturalOrder()).get();
+        return fees.stream().max(Comparator.naturalOrder()).orElse(new BigDecimal(0));
     }
 
     public void addNewFee(WindSpeedFeeDto feeDto) {

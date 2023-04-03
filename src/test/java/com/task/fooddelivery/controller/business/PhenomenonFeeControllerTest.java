@@ -28,7 +28,7 @@ class PhenomenonFeeControllerTest {
     private MockMvc mvc;
 
     @Test
-    public void addPhenomenonFeeTest() throws Exception {
+    void addPhenomenonFeeTest() throws Exception {
         String city = "addPhenomenonFeeTestCity";
         String time = "2000-01-01T12:00:00Z";
         String method = "car";
@@ -59,7 +59,7 @@ class PhenomenonFeeControllerTest {
     }
 
     @Test
-    public void deletePhenomenonFeeTest() throws Exception {
+    void deletePhenomenonFeeTest() throws Exception {
         String method = "scooter";
         PhenomenonFeeDeletionDto deletionDto = PhenomenonFeeDeletionDto.builder()
                 .phenomenonName("volcanic eruption").deliveryMethod(method).build();

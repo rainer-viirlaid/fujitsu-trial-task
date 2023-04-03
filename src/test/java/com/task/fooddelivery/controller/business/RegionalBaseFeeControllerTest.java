@@ -45,7 +45,7 @@ class RegionalBaseFeeControllerTest {
     );
 
     @Test
-    public void getDefaultBaseFeesTest() throws Exception {
+    void getDefaultBaseFeesTest() throws Exception {
         for (String city : defaultFeesMap.keySet()) {
             for (String deliveryMethod : defaultFeesMap.get(city).keySet()) {
                 mvc.perform(get("/business/regional_base_fee/read").param("city", city).param("method", deliveryMethod))
@@ -57,7 +57,7 @@ class RegionalBaseFeeControllerTest {
     }
 
     @Test
-    public void createBaseFeeTest() throws Exception {
+    void createBaseFeeTest() throws Exception {
         String city = "createBaseFeeTestCity";
         String method = "car";
         BigDecimal fee = new BigDecimal("50.5");
@@ -76,7 +76,7 @@ class RegionalBaseFeeControllerTest {
     }
 
     @Test
-    public void updateBaseFeeTest() throws Exception {
+    void updateBaseFeeTest() throws Exception {
         String city = "updateBaseFeeTestCity";
         String method = "car";
         BigDecimal fee = new BigDecimal("55.5");
@@ -95,7 +95,7 @@ class RegionalBaseFeeControllerTest {
     }
 
     @Test
-    public void deleteBaseFeeTest() throws Exception {
+    void deleteBaseFeeTest() throws Exception {
         String city = "deleteBaseFeeTestCity";
         String method = "car";
 

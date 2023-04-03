@@ -29,7 +29,7 @@ class WeatherSchedulerTest {
     private WeatherScheduler weatherScheduler;
 
     @Test
-    public void gatherWeatherDataSavesToDatabaseTest() {
+    void gatherWeatherDataSavesToDatabaseTest() {
         WeatherStation station = new WeatherStation();
         station.setId(88);
         given(weatherStationRepository.findByStationNameIgnoreCase(anyString()))

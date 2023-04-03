@@ -29,7 +29,7 @@ class AirTemperatureFeeControllerTest {
     private MockMvc mvc;
 
     @Test
-    public void addAirTemperatureFeeTest() throws Exception {
+    void addAirTemperatureFeeTest() throws Exception {
         String city = "addAirTemperatureFeeTestCity";
         String time = "2000-01-01T12:00:00Z";
         String method = "car";
@@ -60,7 +60,7 @@ class AirTemperatureFeeControllerTest {
     }
 
     @Test
-    public void deleteAirTemperatureTest() throws Exception {
+    void deleteAirTemperatureTest() throws Exception {
         Double maxTemp = -88d;
         String method = "scooter";
         AirTemperatureFeeDeletionDto deletionDto = AirTemperatureFeeDeletionDto.builder()

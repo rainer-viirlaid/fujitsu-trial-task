@@ -79,7 +79,7 @@ class DeliveryFeeControllerTest {
     );
 
     @Test
-    public void getDefaultFeesCarTest() throws Exception {
+    void getDefaultFeesCarTest() throws Exception {
         String method = "car";
         OffsetDateTime time = OffsetDateTime.parse("2000-01-01T01:00:00Z");
 
@@ -98,7 +98,7 @@ class DeliveryFeeControllerTest {
     }
 
     @Test
-    public void getDefaultFeesScooterTest() throws Exception {
+    void getDefaultFeesScooterTest() throws Exception {
         String method = "scooter";
 
         for (String city : defaultCityScooterBaseFees.keySet()) {
@@ -119,7 +119,7 @@ class DeliveryFeeControllerTest {
     }
 
     @Test
-    public void getDefaultForbiddenScooterTest() throws Exception {
+    void getDefaultForbiddenScooterTest() throws Exception {
         String method = "scooter";
 
         for (String city : defaultCityScooterBaseFees.keySet()) {
@@ -138,7 +138,7 @@ class DeliveryFeeControllerTest {
     }
 
     @Test
-    public void getDefaultFeesBikeTest() throws Exception {
+    void getDefaultFeesBikeTest() throws Exception {
         String method = "bike";
 
         for (String city : defaultCityBikeBaseFees.keySet()) {
@@ -159,7 +159,7 @@ class DeliveryFeeControllerTest {
     }
 
     @Test
-    public void getDefaultForbiddenBikeTest() throws Exception {
+    void getDefaultForbiddenBikeTest() throws Exception {
         String method = "bike";
 
         for (String city : defaultCityBikeBaseFees.keySet()) {
